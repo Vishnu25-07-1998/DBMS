@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { useState, useRef, useEffect } from "react";
 import PropTypes from 'prop-types';
-import './SelectDatasource.css';
+import './selectDatasource.css';
 
 const SelectDatasource = ({icon, selectedValue, placeholder, options, onChange, customStyles}) => {
     const [styles, setStyle] = useState({});
