@@ -95,7 +95,7 @@ const Layout = () => {
                             <img src={ProfileAvatar} alt="Profile" className="avatar" />
                             <div className="welcome-text">
                                 <span>Welcome</span>
-                                <strong>John Doe</strong>
+                                <strong>{authState?.user?.username}</strong>
                             </div>
                             <UnfoldMoreIcon style={{ cursor: "pointer" }} />
                         </div>
