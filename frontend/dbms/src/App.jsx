@@ -21,7 +21,7 @@ const App = () => {
           <Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="ETLSheet" element={<ProtectedRoute><EtlSheet /></ProtectedRoute>} />
         </Route> */}
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
             <Route path="/connections" element={<ProtectedRoute><Connections /></ProtectedRoute>} />
           </Route>
           <Route path="/dashboard" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
