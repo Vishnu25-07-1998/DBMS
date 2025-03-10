@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(
     {
-        origin: process.env.CORS_ORIGIN || ["["https://dbms-bnfg.onrender.com"]"],
+        origin: process.env.CORS_ORIGIN || "["https://dbms-bnfg.onrender.com"]",
         methods: ["POST", "GET", "DELETE", "PUT"],
         credentials: true
     }
