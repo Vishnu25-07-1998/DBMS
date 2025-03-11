@@ -8,6 +8,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from "@mui/icons-material/Lock";
 import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 const ConnectModal = ({ closeConnect }) => {
     const initialFormData = {
@@ -24,6 +25,7 @@ const ConnectModal = ({ closeConnect }) => {
         { label: 'MySQL', icon: mysqlIcon }
     ];
     const [selectedDb, setSelectedDb] = useState(options[0].label);
+    const API_URL = import.meta.env.VITE_API_URL;
     const [formData, setFormData] = useState(initialFormData);
     const [showPassword, setShowPassword] = useState(false);
     const [isConnecting, setConnect] = useState(false);
@@ -56,7 +58,7 @@ const ConnectModal = ({ closeConnect }) => {
 
         setConnect(false);
         try {
-            const response = await axios.post("http://localhost:3000/api/datasourceroute/dbconnect",
+            const response = await axios.post(`${API_URL}/api/datasourceroute/dbconnect`,
                 JSON.stringify(formData),
                 {
                     headers: {
