@@ -56,7 +56,7 @@ const ConnectModal = ({ closeConnect }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setConnect(false);
+        setConnect(true);
         try {
             const response = await axios.post(`${API_URL}/api/datasourceroute/dbconnect`,
                 JSON.stringify(formData),
