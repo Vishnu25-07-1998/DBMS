@@ -10,13 +10,14 @@ const Connections = () => {
  
     const location = useLocation();
     const [active, setActive] = useState(location.pathname);
+    const API_URL = import.meta.env.VITE_API_URL;
     const { authState } = useContext(AuthContext);
     const [dataSources, setDataSources] = useState([]);
     const [connectModal, closeConnect] = useState(false);
     useEffect(() => {
         const fetchDataSources = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/datasourceroute/datasources', {
+                const response = await axios.get(`${API_URL}/api/datasourceroute/datasources`, {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${authState.token}`,
