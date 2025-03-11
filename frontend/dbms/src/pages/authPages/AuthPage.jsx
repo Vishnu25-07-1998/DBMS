@@ -5,6 +5,7 @@ import { useState, useContext } from 'react';
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import LockIcon from "@mui/icons-material/Lock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +15,8 @@ const AuthPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showRegPassword, setShowRegPassword] = useState(false);
     const [switchArticle, setSwitch] = useState(false);
+    const [loggingIn, setLogging] = useState(false);
+    const [isRegistering, setRegister] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -40,6 +43,7 @@ const AuthPage = () => {
         if (name === "password") validatePassword(authData.password, "password");
         if (name === "regUsername") validateUsername(authData.regUsername, "regUsername");
         if (name === "regPassword") validatePassword(authData.regPassword, "regPassword");
+        if (name === "regEmail") validateEmail(authData.regEmail, "regEmail");
         if (name === "email") validateEmail(authData.email, "email");
     };
     const handleChange = (e) => {
@@ -110,13 +114,12 @@ const AuthPage = () => {
         //     console.log("Fix validation errors before submitting");
         //     return;
         // }
-
+        setLogging(true);
         try {
             const response = await axios.post(`${API_URL}/api/auth/login`,
                 { email: authData.email, password: authData.password },
                 { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
             );
-            console.log("response : ", response);
             login(response?.data?.token);
             navigate('/dashboard');
         } catch (error) {
@@ -132,6 +135,8 @@ const AuthPage = () => {
                 }
                 return updatedErrors;
             });
+        } finally {
+            setLogging(false);
         }
     };
 
@@ -147,6 +152,7 @@ const AuthPage = () => {
         //     return;
         // }
 
+        setRegister(true);
         try {
             await axios.post(`${API_URL}/api/auth/register`,
                 { username: authData.regUsername, password: authData.regPassword, email: authData.regEmail },
@@ -164,6 +170,8 @@ const AuthPage = () => {
                 }
                 return updatedErrors;
             });
+        } finally {
+            setRegister(false);
         }
     };
 
@@ -193,7 +201,15 @@ const AuthPage = () => {
                         <p className="error-message">{authErrors.password}</p>
                     </div>
 
-                    <button type="submit" className="blue-button" onClick={handleLogin}>Sign In</button>
+                    {loggingIn ?
+                        <div class="animate-bar">
+                            <span className='dots'></span>
+                            <span className='dots'></span>
+                            <span className='dots'></span>
+                        </div>
+                        :
+                        <button type="submit" className="blue-button" onClick={handleLogin}>Sign In</button>
+                    }
                     <p className="switch-text" onClick={() => setSwitch(!switchArticle)}>Don't have an account? Register</p>
                 </article>
 
@@ -240,7 +256,14 @@ const AuthPage = () => {
                         </div>
                         <p className="error-message">{authErrors.regPassword}</p>
                     </div>
-                    <button type="submit" className="blue-button" onClick={handleRegister}>Register</button>
+                    {isRegistering ?
+                        <div class="animate-bar">
+                            <span className='dots'></span>
+                            <span className='dots'></span>
+                            <span className='dots'></span>
+                        </div>
+                        :
+                        <button type="submit" className="blue-button" onClick={handleRegister}>Register</button>}
                     <p className="switch-text" onClick={() => setSwitch(!switchArticle)}>Already have an account? Login</p>
                 </article>
             </section>

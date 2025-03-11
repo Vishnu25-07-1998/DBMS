@@ -26,7 +26,7 @@ const ConnectModal = ({ closeConnect }) => {
     const [selectedDb, setSelectedDb] = useState(options[0].label);
     const [formData, setFormData] = useState(initialFormData);
     const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [isConnecting, setConnect] = useState(false);
     const { authState } = useContext(AuthContext);
     const databaseDrivers = {
         MySQL: "mysql+pymysql",
@@ -54,8 +54,8 @@ const ConnectModal = ({ closeConnect }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setConnect(false);
         try {
-            setLoading(true);
             const response = await axios.post("http://localhost:3000/api/datasourceroute/dbconnect",
                 JSON.stringify(formData),
                 {
@@ -88,7 +88,7 @@ const ConnectModal = ({ closeConnect }) => {
                 alert("Failed to connect to the server.");
             }
         } finally {
-            setLoading(false);
+            setConnect(false);
         }
     }
     return (
@@ -224,9 +224,15 @@ const ConnectModal = ({ closeConnect }) => {
                                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={() => setShowPassword(!showPassword)} />
                             </div>
                         </div>
+                        { isConnecting ? <div class="animate-bar">
+                            <span className='dots'></span>
+                            <span className='dots'></span>
+                            <span className='dots'></span>
+                        </div>
+                        : 
                         <button type="submit" className='connect-btn'>
                             submit
-                        </button>
+                        </button>}
                     </form>
                 }
 

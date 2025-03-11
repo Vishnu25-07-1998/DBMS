@@ -18,8 +18,9 @@ const Layout = () => {
     const location = useLocation();
     const [active, setActive] = useState(location.pathname);
     const selectRef = useRef(null);
-    const { authState } = useContext(AuthContext);
+    const { authState, logout } = useContext(AuthContext);
     const navigate = useNavigate();
+
 
 
 
@@ -61,14 +62,19 @@ const Layout = () => {
         setDropdown(false);
         switch (item) {
             case "Database Analytics":
-                navigate("/dashboard/db-analytics"); 
+                navigate("/dashboard/db-analytics");
                 break;
             case "High Level Design/Mapping":
-                navigate("/dashboard/highLevel"); 
+                navigate("/dashboard/highLevel");
                 break;
             default:
                 break;
         }
+    }
+
+    const handleLogout = () => {
+        logout();
+        navigate('/sign');
     }
 
     return (
@@ -104,7 +110,7 @@ const Layout = () => {
             </header>
             <aside className="module-sidebar">
                 <ul className="sidebar-menu">
-                <li className={`sidebar-item ${location.pathname.includes("/dashboard") ? "active" : ""}`}>
+                    <li className={`sidebar-item ${location.pathname.includes("/dashboard") ? "active" : ""}`}>
                         <Link to="/dashboard" className="sidebar-link">
                             <SpaceDashboardIcon className="sidebar-icon" />
                             <p className="menu-text">Dashboard</p>
@@ -117,6 +123,7 @@ const Layout = () => {
                         </Link>
                     </li>
                 </ul>
+                <button className='module-btn' onClick={handleLogout}>Log Out</button>
             </aside>
             <main className='module-content'>
                 <Outlet />

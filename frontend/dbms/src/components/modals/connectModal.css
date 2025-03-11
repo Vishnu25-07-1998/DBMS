@@ -27,3 +27,13 @@
     cursor: pointer;
     transition: 0.3s;
 }
+
+.connect-btn:hover {
+    background: #0056b3;
+}
+
+.close:hover {
+    background: #0056b3;
+    transform: scale(1.02);
+    color: var(--error-color);
+}
