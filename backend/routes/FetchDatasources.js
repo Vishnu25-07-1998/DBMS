@@ -111,6 +111,7 @@ async function connectMySQL({ hostname, port, user, database, dbpassword }) {
             user: user,
             database: database,
             password: dbpassword,
+            ssl: { rejectUnauthorized: false },
         });
 
         await connection.ping();
@@ -130,6 +131,7 @@ async function connectPostgres({ hostname, port, user, database, dbpassword }) {
         user: user,
         database: database,
         password: dbpassword,
+        ssl: { rejectUnauthorized: false },
     });
 
     try {
