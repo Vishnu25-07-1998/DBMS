@@ -133,6 +133,7 @@ async function connectPostgres({ hostname, port, user, database, dbpassword }) {
         password: dbpassword,
         ssl: { rejectUnauthorized: false },
     });
+    console.log("pool : ", pool);
 
     try {
         const client = await pool.connect();
